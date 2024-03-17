@@ -14,6 +14,7 @@ builder.Services.AddSingleton<VaccinationDataService>();
 builder.Services.AddSingleton<HeightDataService>();
 builder.Services.AddScoped<EducationDataService>();
 
+builder.Services.AddSingleton<NewBuildingsServices>();
 // Add services to the container.
 
 builder.Services.AddControllers();

@@ -16,6 +16,7 @@ namespace TechObjektBackend.Models
         public string EducationCollectionName { get; set; } = null!;
 
         
+        public string NewBuildingsCollectionName { get; set; } = null!;
     }
 }
 
