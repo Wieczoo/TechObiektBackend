@@ -8,6 +8,14 @@ namespace TechObjektBackend.Models
         public string DatabaseName { get; set; } = null!;
 
         public string PrisonersCollectionName { get; set; } = null!;
+
+        public string VaccinationDataCollectionName { get; set; } = null!;
+
+        public string HeightCollectionName { get; set; } = null!;
+
+        public string EducationCollectionName { get; set; } = null!;
+
+        
     }
 }
 

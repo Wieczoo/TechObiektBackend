@@ -1,11 +1,19 @@
 ﻿using TechObjektBackend.Models;
 using TechObjektBackend.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<ProjectDatabaseSettings>(
-builder.Configuration.GetSection("ProjectDatabase"));
+    builder.Configuration.GetSection("ProjectDatabase"));
 
 builder.Services.AddSingleton<PrisonersServices>();
+builder.Services.AddSingleton<VaccinationDataService>();
+builder.Services.AddSingleton<HeightDataService>();
+builder.Services.AddScoped<EducationDataService>();
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -24,9 +32,19 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
+// Konfiguracja obsługi CORS
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+});
+
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.Run();
-
