@@ -6,6 +6,7 @@ builder.Services.Configure<ProjectDatabaseSettings>(
 builder.Configuration.GetSection("ProjectDatabase"));
 
 builder.Services.AddSingleton<PrisonersServices>();
+builder.Services.AddSingleton<NewBuildingsServices>();
 // Add services to the container.
 
 builder.Services.AddControllers();
