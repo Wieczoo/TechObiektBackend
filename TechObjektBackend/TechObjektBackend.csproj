@@ -9,11 +9,18 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
+    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Plotly.NET" Version="4.2.0" />
+    <PackageReference Include="Plotly.NET.CSharp" Version="0.11.1" />
+    <PackageReference Include="Plotly.NET.ImageExport" Version="5.0.1" />
+    <PackageReference Include="Plotly.NET.Interactive" Version="4.2.1" />
+    <PackageReference Include="pythonnet" Version="3.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.24.0" />
     <PackageReference Include="MongoDB.Driver.Core" Version="2.24.0" />
     <PackageReference Include="MongoDB.Bson" Version="2.24.0" />
+    <PackageReference Include="XPlot.Plotly" Version="4.0.6" />
   </ItemGroup>
 
   <ItemGroup>

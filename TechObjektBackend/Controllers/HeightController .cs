@@ -1,9 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Plotly.NET;
+using Plotly.NET.ImageExport;
+using Plotly.NET.LayoutObjects;
+using System.Diagnostics.Metrics;
 using TechObjektBackend.Models;
 using TechObjektBackend.Services;
-using TechObjektBackend.Models;
 
 namespace TechObjektBackend.Controllers
 {
@@ -12,10 +18,12 @@ namespace TechObjektBackend.Controllers
     public class HeightController : ControllerBase
     {
         private readonly HeightDataService _heightDataService;
+        private readonly ILogger<HeightController> _logger;
 
-        public HeightController(HeightDataService heightDataService)
+        public HeightController(HeightDataService heightDataService, ILogger<HeightController> logger)
         {
             _heightDataService = heightDataService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -65,6 +73,91 @@ namespace TechObjektBackend.Controllers
             return NoContent();
         }
 
-        
+        [HttpGet("plotly/png")]
+        public IActionResult GetPlotlyChartAsPNG()
+        {
+            var data = _heightDataService.GetAsync().Result;
+
+            var x = data.Select(h => h.rok).ToArray();
+            var y = data.Select(h => h.wartosc).ToArray();
+
+            LinearAxis xAxis = new LinearAxis();
+            xAxis.SetValue("title", "Rok");
+            xAxis.SetValue("showgrid", false);
+            xAxis.SetValue("showline", true);
+
+            LinearAxis yAxis = new LinearAxis();
+            yAxis.SetValue("title", "Wartość");
+            yAxis.SetValue("showgrid", false);
+            yAxis.SetValue("showline", true);
+
+            Layout layout = new Layout();
+            layout.SetValue("xaxis", xAxis);
+            layout.SetValue("yaxis", yAxis);
+            layout.SetValue("showlegend", true);
+
+            Trace trace = new Trace("scatter");
+            trace.SetValue("x", x);
+            trace.SetValue("y", y);
+            trace.SetValue("mode", "markers");
+            trace.SetValue("name", "Wysokość");
+
+            var chart = GenericChart
+                        .ofTraceObject(false, trace)
+                        .WithLayout(layout);
+
+            var filePath = "D:\\TechObiektFrontend\\src\\images\\height_chart.png";
+            chart.SavePNG(filePath);
+
+            return Ok();
+        }
+        [HttpGet("mean")]
+        public async Task<ActionResult<double>> GetMeanHeight()
+        {
+            var meanHeight = await _heightDataService.CalculateMeanHeightAsync();
+            return Ok(meanHeight);
+        }
+
+        [HttpGet("median")]
+        public async Task<ActionResult<double>> GetMedianHeight()
+        {
+            var medianHeight = await _heightDataService.CalculateMedianHeightAsync();
+            return Ok(medianHeight);
+        }
+
+        [HttpGet("standard-deviation")]
+        public async Task<ActionResult<double>> GetStandardDeviation()
+        {
+            var standardDeviation = await _heightDataService.CalculateStandardDeviationAsync();
+            return Ok(standardDeviation);
+        }
+
+        [HttpGet("tallest-country")]
+        public async Task<IActionResult> GetTallestCountry()
+        {
+            var data = await _heightDataService.GetAsync(); // Pobierz dane z serwisu
+
+            // Grupowanie danych według kraju
+            var groupedData = data.GroupBy(h => h.kraj);
+
+            // Obliczanie średniej wartości wzrostu dla każdego kraju
+            var averageHeights = groupedData.Select(group =>
+                new
+                {
+                    Country = group.Key,
+                    AverageHeight = group.Average(h => h.wartosc)
+                });
+
+            // Znalezienie kraju z najwyższą średnią wartością wzrostu
+            var tallestCountry = averageHeights.OrderByDescending(x => x.AverageHeight).FirstOrDefault();
+
+            if (tallestCountry == null)
+            {
+                return NotFound("Brak danych dotyczących wzrostu.");
+            }
+
+            return Ok(new { TallestCountry = tallestCountry.Country, AverageHeight = tallestCountry.AverageHeight });
+        }
+
     }
 }

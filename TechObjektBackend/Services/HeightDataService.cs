@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Options;
+﻿using MathNet.Numerics.Statistics;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TechObjektBackend.Models;
 
@@ -32,5 +34,27 @@ namespace TechObjektBackend.Services
 
         public async Task RemoveAsync(string id) =>
             await _heightCollection.DeleteOneAsync(data => data.Id == id);
+
+        public async Task<double> CalculateMeanHeightAsync()
+        {
+            var data = await GetAsync();
+            var heights = data.Select(h => h.wartosc);
+            return heights.Mean();
+        }
+
+        public async Task<double> CalculateMedianHeightAsync()
+        {
+            var data = await GetAsync();
+            var heights = data.Select(h => h.wartosc);
+            return heights.Median();
+        }
+
+        public async Task<double> CalculateStandardDeviationAsync()
+        {
+            var data = await GetAsync();
+            var heights = data.Select(h => h.wartosc);
+            return heights.StandardDeviation();
+        }
+
     }
 }
