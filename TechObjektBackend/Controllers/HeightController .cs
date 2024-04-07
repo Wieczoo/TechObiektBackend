@@ -135,12 +135,12 @@ namespace TechObjektBackend.Controllers
         [HttpGet("tallest-country")]
         public async Task<IActionResult> GetTallestCountry()
         {
-            var data = await _heightDataService.GetAsync(); // Pobierz dane z serwisu
+            var data = await _heightDataService.GetAsync(); 
 
-            // Grupowanie danych według kraju
+            
             var groupedData = data.GroupBy(h => h.kraj);
 
-            // Obliczanie średniej wartości wzrostu dla każdego kraju
+            
             var averageHeights = groupedData.Select(group =>
                 new
                 {
@@ -148,7 +148,7 @@ namespace TechObjektBackend.Controllers
                     AverageHeight = group.Average(h => h.wartosc)
                 });
 
-            // Znalezienie kraju z najwyższą średnią wartością wzrostu
+            
             var tallestCountry = averageHeights.OrderByDescending(x => x.AverageHeight).FirstOrDefault();
 
             if (tallestCountry == null)
