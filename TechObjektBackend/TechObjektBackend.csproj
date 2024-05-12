@@ -21,7 +21,12 @@
     <PackageReference Include="MongoDB.Driver" Version="2.24.0" />
     <PackageReference Include="MongoDB.Driver.Core" Version="2.24.0" />
     <PackageReference Include="MongoDB.Bson" Version="2.24.0" />
+<<<<<<< Updated upstream
     <PackageReference Include="XPlot.Plotly" Version="4.0.6" />
+=======
+    <PackageReference Include="Plotly.NET" Version="4.2.0" />
+    <PackageReference Include="Plotly.NET.CSharp" Version="0.11.1" />
+>>>>>>> Stashed changes
   </ItemGroup>
 
   <ItemGroup>

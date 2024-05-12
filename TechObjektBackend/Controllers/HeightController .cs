@@ -11,6 +11,7 @@ using System.Diagnostics.Metrics;
 using TechObjektBackend.Models;
 using TechObjektBackend.Services;
 
+
 namespace TechObjektBackend.Controllers
 {
     [ApiController]
@@ -158,6 +159,7 @@ namespace TechObjektBackend.Controllers
 
             return Ok(new { TallestCountry = tallestCountry.Country, AverageHeight = tallestCountry.AverageHeight });
         }
+
 
     }
 }
