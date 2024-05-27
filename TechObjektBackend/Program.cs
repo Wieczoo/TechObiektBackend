@@ -15,6 +15,7 @@ builder.Services.AddSingleton<HeightDataService>();
 builder.Services.AddScoped<EducationDataService>();
 
 builder.Services.AddSingleton<NewBuildingsServices>();
+builder.Services.AddSingleton<QueryBuilderServices>();
 // Add services to the container.
 
 builder.Services.AddControllers();

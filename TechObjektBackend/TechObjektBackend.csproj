@@ -21,16 +21,19 @@
     <PackageReference Include="MongoDB.Driver" Version="2.24.0" />
     <PackageReference Include="MongoDB.Driver.Core" Version="2.24.0" />
     <PackageReference Include="MongoDB.Bson" Version="2.24.0" />
-<<<<<<< Updated upstream
     <PackageReference Include="XPlot.Plotly" Version="4.0.6" />
-=======
     <PackageReference Include="Plotly.NET" Version="4.2.0" />
     <PackageReference Include="Plotly.NET.CSharp" Version="0.11.1" />
->>>>>>> Stashed changes
+    <PackageReference Include="Microsoft.ML" Version="3.0.1" />
+    <PackageReference Include="Accord.MachineLearning" Version="3.8.0" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Models\" />
     <None Remove="Services\" />
+    <None Remove="Middleware\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Middleware\" />
   </ItemGroup>
 </Project>

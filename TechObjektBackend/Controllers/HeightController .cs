@@ -11,7 +11,6 @@ using System.Diagnostics.Metrics;
 using TechObjektBackend.Models;
 using TechObjektBackend.Services;
 
-
 namespace TechObjektBackend.Controllers
 {
     [ApiController]
@@ -19,12 +18,10 @@ namespace TechObjektBackend.Controllers
     public class HeightController : ControllerBase
     {
         private readonly HeightDataService _heightDataService;
-        private readonly ILogger<HeightController> _logger;
 
-        public HeightController(HeightDataService heightDataService, ILogger<HeightController> logger)
+        public HeightController(HeightDataService heightDataService)
         {
             _heightDataService = heightDataService;
-            _logger = logger;
         }
 
         [HttpGet]
@@ -159,7 +156,6 @@ namespace TechObjektBackend.Controllers
 
             return Ok(new { TallestCountry = tallestCountry.Country, AverageHeight = tallestCountry.AverageHeight });
         }
-
 
     }
 }

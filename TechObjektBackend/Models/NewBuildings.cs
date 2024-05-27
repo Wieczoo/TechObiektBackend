@@ -2,6 +2,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
+using Microsoft.ML.Data;
 
 public class NewBuildings
 {
@@ -30,4 +31,17 @@ public class YearData
 
     [BsonElement("attrId")]
     public int AttrId { get; set; }
+}
+
+public class YearDataForPrediction
+{
+    public float Year { get; set; }
+    public float Val { get; set; }
+}
+
+public class YearDataPrediction
+{
+    [ColumnName("Score")]
+    public float Val { get; set; }
+    public float Year { get; set; }
 }

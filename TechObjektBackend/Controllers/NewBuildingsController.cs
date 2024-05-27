@@ -68,5 +68,18 @@ public class NewBuildingsController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("predictions/{id:length(24)}")]
+    public async Task<IActionResult> Predictions(string id)
+    {
+        var NewBuildings = await _NewBuildingsServices.PredictFutureData(id);
+
+        if (NewBuildings is null)
+        {
+            return NotFound();
+        }
+
+        return (IActionResult)NewBuildings;
+    }
 }
 
